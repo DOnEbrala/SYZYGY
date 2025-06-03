@@ -20,7 +20,7 @@
                         <img src="../assets/Images/platform-icons/itunes (1).png">
                         <img src="../assets/Images/platform-icons/soundcloud.png">
                         <img src="../assets/Images/platform-icons/spotify.png">
-                        <img src="../assets/Images/platform-icons/app.png">
+                        <img src="../assets/Images/platform-icons/youtube-music-icon.svg">
                     </div>
                     <div class="syzygy_platform-statistics d-flex justify-content-between gap-5 mt-5 w-100 fs-2">
                         <div class="artists d-flex flex-column">
