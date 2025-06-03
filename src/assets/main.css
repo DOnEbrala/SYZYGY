@@ -1,0 +1,23 @@
+html {
+  overflow-y: scroll; /* Always reserve space for scrollbar */
+}
+body{
+  background-image: url(./Images/Background.svg);
+  object-fit: cover;
+  background-size: cover;
+}
+.btn-primary{
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #ffffff;
+}
+.btn-primary:hover{
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+.btn-primary:active{
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #ffffff;
+}
