@@ -5,6 +5,7 @@ body{
   background-image: url(./Images/Background.svg);
   object-fit: cover;
   background-size: cover;
+  color: #ffff;
 }
 .btn-primary{
   background-color: #ffffff;
@@ -20,4 +21,31 @@ body{
     background-color: #ffffff !important;
     color: #000000 !important;
     border: 1px solid #ffffff;
+}
+.form-control {
+  background-color: transparent;
+  color: #fff;
+  border-radius: 56px;
+  border: 2px solid #fff;
+  border-color: #fff;
+  padding: 2rem;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  transition: box-shadow 0.3s;
+  font-weight: bold;
+  font-size: 20px;
+
+}
+
+.form-control:hover {
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.9),
+    0 0 40px rgba(255, 255, 255, 0.1),
+    0 0 60px rgba(255, 255, 255, 0.2);
+}
+.form-control:focus {
+  color: #fff;
+  border-color: #fff;
+  background-color: #282828;
+}
+.form-control::placeholder{
+  color: #ffffff;
 }

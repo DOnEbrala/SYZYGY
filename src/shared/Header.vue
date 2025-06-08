@@ -3,7 +3,7 @@
         <div class="container web-container justify-content-between align-items-center">
             <div class="row w-100 main-navigation">
                 <div class="col-4">
-                    <RouterLink to="Syzygy">
+                    <RouterLink to="/">
                         <img src="../assets/Images/header/Syzygy-logo.webp">
                     </RouterLink>
                 </div>
@@ -12,7 +12,10 @@
                         <button class="btn btn-primary">Services</button>
                         <button class="btn btn-primary">About</button>
                         <button class="btn btn-primary">Log In</button>
-                        <button class="btn btn-primary">Sign Up</button>
+                        <RouterLink to="/registration/Registration.vue">
+                            <button class="btn btn-primary">Sign Up</button>
+                        </RouterLink>
+
                     </div>
                 </div>
             </div>
@@ -20,10 +23,8 @@
         </div>
     </header>
 </template>
- <script>  
-    export default{
-        name: "HeaderNavigation",
-    }
+ <script setup>  
+
 </script>
 <style scope>
 header {
