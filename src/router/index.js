@@ -18,7 +18,7 @@ const router = createRouter({
     },
     {
       path: "/views/Streaming",
-      name: "register",
+      name: "Streaming",
       component: Streaming,
     }
   ]

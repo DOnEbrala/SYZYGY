@@ -9,7 +9,9 @@
                 </div>
                 <div class="col-8 d-flex justify-content-end align-items-center gap-1 gap-sm-4">
                     <div class="main-navigation-buttons d-flex column-gap-3">
+                        <RouterLink to="/views/Streaming">
                         <button class="btn btn-primary">Services</button>
+                        </RouterLink>
                         <button class="btn btn-primary">About</button>
                         <button class="btn btn-primary">Log In</button>
                         <RouterLink to="/registration/Registration.vue">
