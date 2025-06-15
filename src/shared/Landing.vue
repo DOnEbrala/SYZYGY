@@ -2,7 +2,7 @@
 <template>
 
     <div class="container web-container">
-        <div class="syzygy-landing-page-get-started d-flex justify-content-center flex-column align-items-center m-5">
+        <div class="syzygy-landing-page-get-started d-flex justify-content-center flex-column align-items-center">
             <div class="syzygy-landing-page__header">
                 <label class="fw-bold ">Simplified Music Distribution For your needs</label>
             </div>
@@ -11,7 +11,7 @@
                 <button class="btn btn-primary fw-bold fs-5">Get Started</button>
             </div>
         </div>
-                    <div class="syzygy-landing-page_progress py-4">
+            <div class="syzygy-landing-page_progress py-4">
                 <div class="syzygy-landing-page_available-platforms text-center d-flex flex-column justify-content-center align-items-center">
                     <label class="fs-3 fw-bold m-2">Available on 200+ Platforms</label>
                     <div class="syzygy_platform-logos d-flex justify-content-around py-2">
@@ -51,6 +51,7 @@ export default{
 <style scoped>
 .syzygy-landing-page-get-started{
     color: #fff;
+    margin: 250px 0;
 }
 .syzygy-landing-page__header{
     background-color: rgba(0, 0, 0, 0.5);
@@ -62,6 +63,7 @@ export default{
 .syzygy-landing-page_progress{
     padding-left: 50px;
     padding-right: 50px;
+    margin: 250px 0;
 }
 .syzygy-landing-page_progress .syzygy_platform-logos{
     border: 5px solid #ffffff;
