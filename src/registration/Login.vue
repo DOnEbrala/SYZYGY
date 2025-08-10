@@ -5,30 +5,14 @@
         <div class="container web-container d-flex align-items-center justify-content-center">
             <div class="auth-card glass-card fade-in">
                 <div class="text-center mb-3">
-                    <h2 class="auth-title mb-1">Create your account</h2>
-                    <p class="auth-subtitle">Join and start distributing your music</p>
+                    <h2 class="auth-title mb-1">Welcome back</h2>
+                    <p class="auth-subtitle">Log in to continue</p>
                 </div>
 
-                <div class="auth-grid">
+                <div class="auth-grid single">
                     <div class="form-cell">
                         <label class="form-label">Email</label>
                         <input class="form-control form-control-glass" type="email" placeholder="you@example.com">
-                    </div>
-                    <div class="form-cell">
-                        <label class="form-label">Name</label>
-                        <input class="form-control form-control-glass" type="text" placeholder="First name">
-                    </div>
-                    <div class="form-cell">
-                        <label class="form-label">Surname</label>
-                        <input class="form-control form-control-glass" type="text" placeholder="Last name">
-                    </div>
-                    <div class="form-cell">
-                        <label class="form-label">Artist Name</label>
-                        <input class="form-control form-control-glass" type="text" placeholder="Artist name">
-                    </div>
-                    <div class="form-cell">
-                        <label class="form-label">Existing DSP Profile Link</label>
-                        <input class="form-control form-control-glass" type="url" placeholder="https://">
                     </div>
                     <div class="form-cell">
                         <label class="form-label">Password</label>
@@ -36,11 +20,18 @@
                     </div>
                 </div>
 
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <label class="remember d-flex align-items-center gap-2">
+                        <input type="checkbox"> <span>Remember me</span>
+                    </label>
+                    <a class="auth-link" href="#/forgot">Forgot password?</a>
+                </div>
+
                 <div class="auth-actions d-flex flex-column align-items-stretch">
-                    <button class="btn-auth" type="button">Create Account</button>
+                    <button class="btn-auth" type="button">Log In</button>
                     <div class="mt-3 text-center">
-                        <span class="auth-meta">Already have an account?</span>
-                        <router-link class="auth-link" :to="{ name: 'login' }">Log in</router-link>
+                        <span class="auth-meta">New here?</span>
+                        <router-link class="auth-link" :to="{ name: 'register' }">Create an account</router-link>
                     </div>
                 </div>
             </div>
@@ -91,28 +82,14 @@
     padding: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.25);
 }
-.fade-in {
-    opacity: 0;
-    animation: fadeInUp .6s ease forwards;
-}
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+.fade-in { opacity: 0; animation: fadeInUp .6s ease forwards; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.auth-card { width: 100%; max-width: 560px; }
+.auth-card { width: 100%; max-width: 520px; }
 .auth-title { color: #fff; font-weight: 700; letter-spacing: .2px; }
 .auth-subtitle { color: rgba(255,255,255,0.7); margin: 0; }
 
-.auth-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 12px;
-}
-@media (max-width: 768px) {
-    .auth-grid { grid-template-columns: 1fr; }
-}
+.auth-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 12px; }
 .form-cell { display: flex; flex-direction: column; }
 .form-label { color: rgba(255,255,255,0.9); margin-bottom: 6px; font-weight: 500; }
 .form-control-glass {
@@ -129,6 +106,9 @@
     border-color: rgba(255,255,255,0.6);
     box-shadow: 0 0 0 4px rgba(255,255,255,0.08);
 }
+
+.remember { color: rgba(255,255,255,0.8); font-size: .95rem; }
+.remember input { accent-color: #6366F1; }
 
 .btn-auth {
     appearance: none;
@@ -154,3 +134,5 @@
 <script setup>
 import HeaderNavigation from '@/shared/Header.vue';
 </script>
+
+
