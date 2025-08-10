@@ -3,6 +3,7 @@ import Syzygy from "@/views/Syzygy.vue";
 import Registration from "@/registration/Registration.vue";
 import Login from "@/registration/Login.vue";
 import Streaming from "@/views/Streaming.vue";
+import Profile from "@/views/Profile.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,6 +36,11 @@ const router = createRouter({
       path: "/views/Streaming",
       name: "Streaming",
       component: Streaming,
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: Profile,
     }
   ]
 })

@@ -1,5 +1,5 @@
 <template>
-    <HeaderNavigation />
+    
 
     <div class="auth-page">
         <div class="container web-container d-flex align-items-center justify-content-center">
@@ -9,35 +9,36 @@
                     <p class="auth-subtitle">Join and start distributing your music</p>
                 </div>
 
-                <div class="auth-grid">
+                <form class="auth-grid" @submit.prevent="onSubmit">
                     <div class="form-cell">
                         <label class="form-label">Email</label>
-                        <input class="form-control form-control-glass" type="email" placeholder="you@example.com">
+                        <input v-model.trim="form.email" class="form-control form-control-glass" type="email" placeholder="you@example.com" required>
                     </div>
                     <div class="form-cell">
-                        <label class="form-label">Name</label>
-                        <input class="form-control form-control-glass" type="text" placeholder="First name">
-                    </div>
-                    <div class="form-cell">
-                        <label class="form-label">Surname</label>
-                        <input class="form-control form-control-glass" type="text" placeholder="Last name">
+                        <label class="form-label">Username</label>
+                        <input v-model.trim="form.username" class="form-control form-control-glass" type="text" placeholder="Your username" required>
                     </div>
                     <div class="form-cell">
                         <label class="form-label">Artist Name</label>
-                        <input class="form-control form-control-glass" type="text" placeholder="Artist name">
+                        <input v-model.trim="form.artistName" class="form-control form-control-glass" type="text" placeholder="Artist name" required>
                     </div>
                     <div class="form-cell">
-                        <label class="form-label">Existing DSP Profile Link</label>
-                        <input class="form-control form-control-glass" type="url" placeholder="https://">
+                        <label class="form-label">Existing DSP Profile Links (comma separated)</label>
+                        <input v-model.trim="existingLinksInput" class="form-control form-control-glass" type="text" placeholder="https://link1, https://link2">
                     </div>
                     <div class="form-cell">
                         <label class="form-label">Password</label>
-                        <input class="form-control form-control-glass" type="password" placeholder="••••••••">
+                        <input v-model="form.password" class="form-control form-control-glass" type="password" placeholder="••••••••" required minlength="6">
                     </div>
-                </div>
+                </form>
 
                 <div class="auth-actions d-flex flex-column align-items-stretch">
-                    <button class="btn-auth" type="button">Create Account</button>
+                    <div v-if="errors.length" class="alert alert-danger" role="alert">
+                        <ul class="mb-0 ps-3">
+                            <li v-for="(err, idx) in errors" :key="idx">{{ err }}</li>
+                        </ul>
+                    </div>
+                    <button class="btn-auth" type="button" @click="onSubmit" :disabled="submitting">{{ submitting ? 'Creating...' : 'Create Account' }}</button>
                     <div class="mt-3 text-center">
                         <span class="auth-meta">Already have an account?</span>
                         <router-link class="auth-link" :to="{ name: 'login' }">Log in</router-link>
@@ -152,5 +153,56 @@
 </style>
 
 <script setup>
-import HeaderNavigation from '@/shared/Header.vue';
+import { reactive, ref, watch } from 'vue'
+ 
+import { registerUser } from '@/services/auth'
+
+const submitting = ref(false)
+const form = reactive({
+  email: '',
+  password: '',
+  username: '',
+  artistName: '',
+  existingDspProfileLinks: [],
+})
+
+// Bind a simple comma-separated input to the array in payload
+const existingLinksInput = ref('')
+const errors = ref([])
+watch(existingLinksInput, (value) => {
+  form.existingDspProfileLinks = value
+    .split(',')
+    .map(s => s.trim())
+    .filter(s => s.length > 0)
+})
+
+async function onSubmit() {
+  if (submitting.value) return
+  submitting.value = true
+  errors.value = []
+  try {
+    await registerUser({
+      email: form.email,
+      password: form.password,
+      username: form.username,
+      artistName: form.artistName,
+      existingDspProfileLinks: form.existingDspProfileLinks,
+    })
+    // Simple redirect to login on success
+    window.location.href = '/login'
+  } catch (error) {
+    const data = error?.response?.data
+    if (Array.isArray(data)) {
+      errors.value = data.map(d => d?.description || d?.code || 'Validation error')
+    } else if (typeof data === 'object' && data !== null) {
+      errors.value = [data.message || 'Registration failed']
+    } else if (typeof data === 'string' && data.trim().length) {
+      errors.value = [data]
+    } else {
+      errors.value = [error.message || 'Registration failed']
+    }
+  } finally {
+    submitting.value = false
+  }
+}
 </script>

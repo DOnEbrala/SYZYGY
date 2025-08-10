@@ -1,5 +1,5 @@
 <template>
-    <HeaderNavigation />
+    
 
     <div class="auth-page">
         <div class="container web-container d-flex align-items-center justify-content-center">
@@ -9,16 +9,16 @@
                     <p class="auth-subtitle">Log in to continue</p>
                 </div>
 
-                <div class="auth-grid single">
+                <form class="auth-grid single" @submit.prevent="onSubmit">
                     <div class="form-cell">
                         <label class="form-label">Email</label>
-                        <input class="form-control form-control-glass" type="email" placeholder="you@example.com">
+                        <input v-model.trim="email" class="form-control form-control-glass" type="email" placeholder="you@example.com" required>
                     </div>
                     <div class="form-cell">
                         <label class="form-label">Password</label>
-                        <input class="form-control form-control-glass" type="password" placeholder="••••••••">
+                        <input v-model="password" class="form-control form-control-glass" type="password" placeholder="••••••••" required>
                     </div>
-                </div>
+                </form>
 
                 <div class="d-flex justify-content-between align-items-center mt-2">
                     <label class="remember d-flex align-items-center gap-2">
@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="auth-actions d-flex flex-column align-items-stretch">
-                    <button class="btn-auth" type="button">Log In</button>
+                    <button class="btn-auth" type="button" @click="onSubmit" :disabled="submitting">{{ submitting ? 'Logging in...' : 'Log In' }}</button>
                     <div class="mt-3 text-center">
                         <span class="auth-meta">New here?</span>
                         <router-link class="auth-link" :to="{ name: 'register' }">Create an account</router-link>
@@ -132,7 +132,33 @@
 </style>
 
 <script setup>
-import HeaderNavigation from '@/shared/Header.vue';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+ 
+import { loginUser } from '@/services/auth'
+import { setAuthenticatedUser } from '@/stores/auth'
+
+const router = useRouter()
+const email = ref('')
+const password = ref('')
+const submitting = ref(false)
+
+async function onSubmit() {
+  if (submitting.value) return
+  submitting.value = true
+  try {
+    const data = await loginUser({ email: email.value, password: password.value })
+    // Prefer backend-provided user data; fallback to entered email
+    const user = (data && typeof data === 'object') ? data : { email: email.value, username: email.value.split('@')[0] }
+    setAuthenticatedUser(user)
+    router.push({ name: 'Syzygy' })
+  } catch (error) {
+    const message = error?.response?.data?.message || error.message || 'Login failed'
+    alert(message)
+  } finally {
+    submitting.value = false
+  }
+}
 </script>
 
 

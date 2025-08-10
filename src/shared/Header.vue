@@ -13,20 +13,49 @@
               <button class="nav-btn" type="button">Services</button>
             </RouterLink>
             <button class="nav-btn" type="button">About</button>
-            <RouterLink :to="{ name: 'login' }">
-              <button class="nav-btn" type="button">Log In</button>
-            </RouterLink>
-            <RouterLink :to="{ name: 'register' }">
-              <button class="nav-cta" type="button">Sign Up</button>
-            </RouterLink>
+            <template v-if="!auth.isAuthenticated">
+              <RouterLink :to="{ name: 'login' }">
+                <button class="nav-btn" type="button">Log In</button>
+              </RouterLink>
+              <RouterLink :to="{ name: 'register' }">
+                <button class="nav-cta" type="button">Sign Up</button>
+              </RouterLink>
+            </template>
+            <template v-else>
+              <div class="dropdown">
+                <button class="nav-btn dropdown-toggle" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="nav-username">{{ auth.user?.username || auth.user?.email }}</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuButton">
+                  <li>
+                    <RouterLink class="dropdown-item" :to="{ name: 'profile' }">Profile</RouterLink>
+                  </li>
+                  <li>
+                    <button class="dropdown-item" type="button" @click="onLogout">Log Out</button>
+                  </li>
+                </ul>
+              </div>
+            </template>
           </nav>
         </div>
       </div>
     </div>
   </header>
 </template>
- <script setup>  
+ <script setup>
+import { authState as auth, clearAuthenticatedUser } from '@/stores/auth'
+import { logoutUser } from '@/services/auth'
 
+async function onLogout() {
+  try {
+    await logoutUser()
+  } catch (e) {
+    // ignore errors, we'll still clear client state
+  } finally {
+    clearAuthenticatedUser()
+    window.location.href = '/'
+  }
+}
 </script>
 <style scoped>
 .site-header {
@@ -35,6 +64,7 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 10px 0;
 }
 .brand-logo { height: 36px; width: auto; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25)); transition: transform .2s ease, filter .2s ease; }
 .brand-name { color: #fff; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; font-size: 1.05rem; }
@@ -52,4 +82,6 @@
   transition: transform .15s ease, filter .2s ease;
 }
 .nav-cta:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.nav-username { color: #fff; font-weight: 700; }
+.username-link { text-decoration: none; }
 </style>

@@ -1,7 +1,5 @@
 <template>
 
-    <HeaderNavigation />
-
     <div class="web-container container">
         <div class="streaming-service d-flex flex-column">
             <div class="glass-card streaming-dashboard fade-in">
@@ -144,7 +142,6 @@
 </template>
 <script setup>
 import { ref, computed } from 'vue';
-import HeaderNavigation from '@/shared/Header.vue';
 
 const coverArtUrl = ref(null);
 const coverInput = ref(null);
